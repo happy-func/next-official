@@ -20,7 +20,7 @@ function Blog({ list }: { list: Article[] }) {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const resp = await axios(`http://localhost:8080/users/blog`);
     return {
         props: {
