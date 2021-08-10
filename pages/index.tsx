@@ -1,9 +1,8 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
-  const [asset, setAsset] = useState("large_0000");
   const startOpen = useRef(0);
   const animate = useRef<{
     loadImages: any;
@@ -15,14 +14,22 @@ export default function Home() {
     canvas: null,
   });
   function drawImg(index: number) {
-    animate.current.ctx.drawImage(animate.current.loadImages[index], 0, 0);
+    if (animate.current.ctx && animate.current.loadImages[index]) {
+      animate.current.ctx.drawImage(
+        animate.current.loadImages[index],
+        0,
+        0,
+        animate.current.canvas.width,
+        animate.current.canvas.height
+      );
+    }
   }
   // 滚动事件
   const scrollEvent = () => {
     // 实时的 scrollTop
     // @ts-ignore
     const scrollTop = document.getElementsByTagName("html")[0].scrollTop;
-    let newAsset = "large_0000";
+    let newAsset = 0;
 
     if (scrollTop > startOpen.current && scrollTop < startOpen.current + 400) {
       let offset = Math.floor(((scrollTop - startOpen.current) / 400) * 121);
@@ -32,18 +39,12 @@ export default function Home() {
       } else if (offset > 121) {
         offset = 121;
       }
-      if (offset < 10) {
-        newAsset = `large_000${offset}`;
-      } else if (offset < 100) {
-        newAsset = `large_00${offset}`;
-      } else {
-        newAsset = `large_0${offset}`;
-      }
+      newAsset = offset;
     } else if (scrollTop >= startOpen.current + 400) {
-      newAsset = "large_0121";
+      newAsset = 121;
     }
     // 设置图片 url
-    setAsset(newAsset);
+    drawImg(newAsset);
   };
   function loadImg(index: number) {
     const img = new Image();
@@ -73,7 +74,7 @@ export default function Home() {
     // 开始动画的滚动距离
     // @ts-ignore
     startOpen.current = 100;
-    scrollEvent();
+
     return () => {
       window.removeEventListener("scroll", scrollEvent, false);
     };
@@ -88,14 +89,7 @@ export default function Home() {
       <div className={styles.stickyContainer}>
         <div className={styles.stickyWrapper}>
           <div className={styles.imgWrapper} id="imgWrapper">
-            {/*<Image*/}
-            {/*  src={`/macbook/${asset}.jpg`}*/}
-            {/*  alt="macImage"*/}
-            {/*  width={789}*/}
-            {/*  height={521}*/}
-            {/*  layout="fixed"*/}
-            {/*/>*/}
-            <canvas id="canvas" />
+            <canvas id="canvas" width={8580} height={5210} />
           </div>
         </div>
       </div>
