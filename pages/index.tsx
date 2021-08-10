@@ -6,16 +6,16 @@ export default function Home() {
   const [asset, setAsset] = useState("large_0000");
   const startOpen = useRef(0);
   const animate = useRef<{
-    loadNums: any;
+    loadImages: any;
     ctx: any;
     canvas: any;
   }>({
-    loadNums: [],
+    loadImages: {},
     ctx: null,
     canvas: null,
   });
   function drawImg(index: number) {
-    animate.current.ctx.drawImage(animate.current.loadNums[index], 0, 0);
+    animate.current.ctx.drawImage(animate.current.loadImages[index], 0, 0);
   }
   // 滚动事件
   const scrollEvent = () => {
@@ -48,7 +48,7 @@ export default function Home() {
   function loadImg(index: number) {
     const img = new Image();
     img.onload = function () {
-      animate.current.loadNums[index] = img;
+      animate.current.loadImages[index] = img;
       if (!index) {
         drawImg(index);
       }
