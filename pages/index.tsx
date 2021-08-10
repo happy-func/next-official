@@ -1,10 +1,11 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 export default function Home() {
   const [asset, setAsset] = useState("large_0000");
-  let startOpen = 0;
+  const startOpen = useRef(0);
   // 滚动事件
   const scrollEvent = () => {
     // 实时的 scrollTop
@@ -12,8 +13,8 @@ export default function Home() {
     const scrollTop = document.getElementsByTagName("html")[0].scrollTop;
     let newAsset = "large_0000";
 
-    if (scrollTop > startOpen && scrollTop < startOpen + 400) {
-      let offset = Math.floor(((scrollTop - startOpen) / 400) * 121);
+    if (scrollTop > startOpen.current && scrollTop < startOpen.current + 400) {
+      let offset = Math.floor(((scrollTop - startOpen.current) / 400) * 121);
 
       if (offset < 1) {
         offset = 1;
@@ -27,7 +28,7 @@ export default function Home() {
       } else {
         newAsset = `large_0${offset}`;
       }
-    } else if (scrollTop >= startOpen + 400) {
+    } else if (scrollTop >= startOpen.current + 400) {
       newAsset = "large_0121";
     }
     // 设置图片 url
@@ -40,7 +41,7 @@ export default function Home() {
     // 开始动画的滚动距离
     // startOpen
     // @ts-ignore
-    startOpen = 100;
+    startOpen.current = 100;
 
     scrollEvent();
 
@@ -58,7 +59,13 @@ export default function Home() {
       <div className={styles.stickyContainer}>
         <div className={styles.stickyWrapper}>
           <div className={styles.imgWrapper} id="imgWrapper">
-            <img src={`/macbook/${asset}.jpg`} alt="macImage" />
+            <Image
+              src={`/macbook/${asset}.jpg`}
+              alt="macImage"
+              width={789}
+              height={521}
+              layout="fixed"
+            />
           </div>
         </div>
       </div>
