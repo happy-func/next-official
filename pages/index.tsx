@@ -1,11 +1,22 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 
 export default function Home() {
   const [asset, setAsset] = useState("large_0000");
   const startOpen = useRef(0);
+  const animate = useRef<{
+    loadNums: any;
+    ctx: any;
+    canvas: any;
+  }>({
+    loadNums: [],
+    ctx: null,
+    canvas: null,
+  });
+  function drawImg(index: number) {
+    animate.current.ctx.drawImage(animate.current.loadNums[index], 0, 0);
+  }
   // 滚动事件
   const scrollEvent = () => {
     // 实时的 scrollTop
@@ -34,17 +45,35 @@ export default function Home() {
     // 设置图片 url
     setAsset(newAsset);
   };
+  function loadImg(index: number) {
+    const img = new Image();
+    img.onload = function () {
+      animate.current.loadNums[index] = img;
+      if (!index) {
+        drawImg(index);
+      }
+    };
+    img.crossOrigin = "Anonymous";
+    img.src = `/macbook/large_${index.toString().padStart(4, "0")}.jpg`;
+  }
+
+  useEffect(() => {
+    for (let i = 0; i < 122; i++) {
+      loadImg(i);
+    }
+  }, []);
+  useEffect(() => {
+    animate.current.canvas = document.querySelector("#canvas");
+    animate.current.ctx = animate.current.canvas.getContext("2d");
+  }, []);
   useEffect(() => {
     // 绑定事件
     window.addEventListener("scroll", scrollEvent, false);
 
     // 开始动画的滚动距离
-    // startOpen
     // @ts-ignore
     startOpen.current = 100;
-
     scrollEvent();
-
     return () => {
       window.removeEventListener("scroll", scrollEvent, false);
     };
@@ -59,13 +88,14 @@ export default function Home() {
       <div className={styles.stickyContainer}>
         <div className={styles.stickyWrapper}>
           <div className={styles.imgWrapper} id="imgWrapper">
-            <Image
-              src={`/macbook/${asset}.jpg`}
-              alt="macImage"
-              width={789}
-              height={521}
-              layout="fixed"
-            />
+            {/*<Image*/}
+            {/*  src={`/macbook/${asset}.jpg`}*/}
+            {/*  alt="macImage"*/}
+            {/*  width={789}*/}
+            {/*  height={521}*/}
+            {/*  layout="fixed"*/}
+            {/*/>*/}
+            <canvas id="canvas" />
           </div>
         </div>
       </div>
