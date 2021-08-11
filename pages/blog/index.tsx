@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import intl from "react-intl-universal";
@@ -10,7 +10,8 @@ export interface Article {
   content: string;
 }
 
-function Blog({ list }: { list: Article[] }) {
+function Blog() {
+  const [list, setList]: [Article[], any] = useState([]);
   const router = useRouter();
   const [lang, setLang] = useState(router.locale);
 
@@ -19,7 +20,13 @@ function Blog({ list }: { list: Article[] }) {
     setLang(e.target.value);
     router.push(router.pathname, router.asPath, { locale: e.target.value });
   }
-
+  async function LoadList() {
+    const resp = await axios(`/api/blog`);
+    setList(resp.data.data);
+  }
+  useEffect(() => {
+    LoadList();
+  }, []);
   return (
     <div>
       <select name="lang" value={lang} onChange={onLangChange}>
@@ -36,15 +43,6 @@ function Blog({ list }: { list: Article[] }) {
       </ul>
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const resp = await axios(`http://localhost:8080/users/blog`);
-  return {
-    props: {
-      list: resp.data.data,
-    },
-  };
 }
 
 export default Blog;
