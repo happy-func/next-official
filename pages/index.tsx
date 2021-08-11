@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 import { useEffect, useRef } from "react";
+import Banner from "../business/home/banner";
 
 export default function Home() {
   const startOpen = useRef(0);
@@ -93,6 +94,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Banner />
     </div>
   );
 }
