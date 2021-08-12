@@ -2,5 +2,19 @@
   &Box{
     width: 100%;
     position: relative;
+    overflow: hidden;
+  }
+  &Slide{
+    position: relative;
+    &PerSlice{
+      //width: 10%;
+      position: absolute;
+      top: 0;
+      background-position-y: 0;
+      background-repeat: no-repeat;
+      &Show{
+
+      }
+    }
   }
 }
