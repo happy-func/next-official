@@ -40,12 +40,12 @@ export default function Banner() {
           <SwiperSlide key={name} className={styles.bannerSlide}>
             {({ isActive }) => (
               <>
-                <Image src={`/banner/${name}`} width={1920} height={645} />
+                <Image src={`/home/banner/${name}`} width={1920} height={645} />
                 {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((idx) => (
                   <div
                     key={idx}
                     style={{
-                      backgroundImage: `url(/banner/${
+                      backgroundImage: `url(/home/banner/${
                         bannerList[
                           index + 1 === bannerList.length ? 0 : index + 1
                         ]

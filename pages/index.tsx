@@ -2,6 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 import { useEffect, useRef } from "react";
 import Banner from "../business/home/banner";
+import Attachment from "../business/home/attachment/Attachment";
 
 export default function Home() {
   const startOpen = useRef(0);
@@ -56,7 +57,7 @@ export default function Home() {
       }
     };
     img.crossOrigin = "Anonymous";
-    img.src = `/macbook/large_${index.toString().padStart(4, "0")}.jpg`;
+    img.src = `/home/macbook/large_${index.toString().padStart(4, "0")}.jpg`;
   }
 
   useEffect(() => {
@@ -95,6 +96,7 @@ export default function Home() {
         </div>
       </div>
       <Banner />
+      <Attachment />
     </div>
   );
 }
