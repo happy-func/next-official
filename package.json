@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tweenjs/tween.js": "^18.6.4",
     "axios": "^0.21.1",
     "flat": "^5.0.2",
     "next": "11.0.1",
