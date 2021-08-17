@@ -1,0 +1,14 @@
+.animate{
+  &Wrap{
+    position: relative;
+    height: 400px;
+    width: 400px;
+    margin: 100px auto;
+  }
+  &Box{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    background-color: blanchedalmond;
+  }
+}
