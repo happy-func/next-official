@@ -10,8 +10,7 @@ export interface Article {
   content: string;
 }
 
-function Blog() {
-  const [list, setList]: [Article[], any] = useState([]);
+function Blog({ list }: { list: Article[] }) {
   const router = useRouter();
   const [lang, setLang] = useState(router.locale);
 
@@ -20,13 +19,6 @@ function Blog() {
     setLang(e.target.value);
     router.push(router.pathname, router.asPath, { locale: e.target.value });
   }
-  async function LoadList() {
-    const resp = await axios(`/api/blog`);
-    setList(resp.data.data);
-  }
-  useEffect(() => {
-    LoadList();
-  }, []);
   return (
     <div>
       <select name="lang" value={lang} onChange={onLangChange}>
@@ -43,6 +35,15 @@ function Blog() {
       </ul>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const resp = await axios(`http://localhost:8080/users/blog`);
+  return {
+    props: {
+      list: resp.data.data,
+    },
+  };
 }
 
 export default Blog;
