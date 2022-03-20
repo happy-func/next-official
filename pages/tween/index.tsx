@@ -1,14 +1,18 @@
 import styles from "./index.module.scss";
 import PageTitle from "../../components/title";
 import TWEEN from "@tweenjs/tween.js";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import WaterButton from "../../components/WaterButton";
 
 interface DEST {
   x: number;
   y: number;
 }
 
+const texts = ["全部", "待报价", "已报价", "已下单"];
+
 export default function TweenPage() {
+  const [activeAt, setActiveAt] = useState("全部");
   const coords: DEST = {
     x: 0,
     y: 0,
@@ -59,6 +63,16 @@ export default function TweenPage() {
     <div className={styles.animateWrap}>
       <PageTitle title="tweenjs 实践" />
       <div className={styles.animateBox} id="animateBox" ref={box} />
+      {texts.map((item) => (
+        <WaterButton
+          active={item === activeAt}
+          key={item}
+          style={{ marginRight: 16 }}
+          onClick={() => setActiveAt(item)}
+        >
+          {item}
+        </WaterButton>
+      ))}
     </div>
   );
 }
