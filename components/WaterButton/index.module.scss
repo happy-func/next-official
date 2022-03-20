@@ -46,4 +46,26 @@
     height: 100%;
     background-color: #2b65f4;
   }
+  &-icon{
+    margin-right: 8px;
+  }
+}
+
+.loading{
+  display: inline-block;
+  animation: loadingCircle 1s infinite linear;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes loadingCircle {
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -3,6 +3,7 @@ import PageTitle from "../../components/title";
 import TWEEN from "@tweenjs/tween.js";
 import { useEffect, useRef, useState } from "react";
 import WaterButton from "../../components/WaterButton";
+import { SearchOutlined } from "@ant-design/icons";
 
 interface DEST {
   x: number;
@@ -67,8 +68,10 @@ export default function TweenPage() {
         <WaterButton
           active={item === activeAt}
           key={item}
+          icon={<SearchOutlined />}
           style={{ marginRight: 16 }}
           onClick={() => setActiveAt(item)}
+          loading={item === texts[0]}
         >
           {item}
         </WaterButton>
