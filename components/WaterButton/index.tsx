@@ -61,7 +61,7 @@ export default function WaterButton(props: IProps) {
         className={classNames(styles["button-water"])}
         style={{ left: 0 }}
       />
-      <button className={classNames(styles.button)}>{children}</button>
+      <span className={classNames(styles.button)}>{children}</span>
     </div>
   );
 }
